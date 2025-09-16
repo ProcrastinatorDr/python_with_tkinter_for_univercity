@@ -1,11 +1,16 @@
 import math
 class DataClass:
-    points_by_parameter_loop_operator: dict
-    points_by_precondition_loop_operator: dict
+    # points_counted_using_for: dict = {}
+    # points_counted_using_while: dict = {}
     image_path: str = ""
-    def count_points_with_parameter_loop_operator(self, a, b, h):
+    def __init__(self):
+        # Эти атрибуты создаются при создании КАЖДОГО экземпляра
+        self.points_counted_using_for = {}
+        self.points_counted_using_while = {}
+        self.image_path = ""  # Лучше инициализировать и это здесь
+    def count_points_using_for(self, a, b, h):
         raise NotImplementedError("Метод должен быть определен в дочернем классе!")
-    def count_points_with_precondition_loop_operator(self, a, b, h):
+    def count_points_using_while(self, a, b, h):
         raise NotImplementedError("Метод должен быть определен в дочернем классе!")
     # Даны по условию задачи.
     from enum import Enum
@@ -15,21 +20,12 @@ class DataClass:
         parameter_and_precondition = 2
 
 class FirstTaskData(DataClass):
-    task_image = 1
-    def __init__(self, picture_path):
-        pass
-    def count_points_with_parameter_loop_operator(self, a, b, h):
+    task_image = ""
+    def count_points_using_for(self, a, b, h):
         left_border = a
         right_border = b
         step = h
-        steps_number = math.ceil((right_border - left_border) / step)
-        for i in steps_number:
-            x = left_border
-            y = _count_y(x)
-
-            self.points_by_parameter_loop_operator.points[x] = y
-            left_border += step
-        def _count_y(self, x):
+        def _count_y(x):
             y = 0
             # 1 + sin^3(x + 0.5), if    x < -0.5
             if x < -0.5:
@@ -43,27 +39,29 @@ class FirstTaskData(DataClass):
             else:
                 y = 1 + (math.sin(x - 0.5)) ** 3
             return y
-    
-    # По заданию, не требуется.
-    def count_with_precondition_loop_operator(self, a, b, h):
-        points_by_precondition_loop_operator = {}
-class SecondTaskData(DataClass):
-    # for
-    def loop_operator_with_parameter_method(self, a, b, h):
-        points_by_parameter_loop_operator = {}
-        
-    # while
-    def loop_operator_with_precondition_method(self, a, b, h):
-        left_border = a
-        right_border = b
-        step = h
-        while left_border < right_border:
+        steps_number = math.ceil((right_border - left_border) / step)
+        for i in range(steps_number):
             x = left_border
             y = _count_y(x)
 
-            DataClass.points_by_precondition_loop_operator.points[x] = y
+            self.points_counted_using_for[x] = y
             left_border += step
-        def _count_y(self, x):
+
+    
+    # По заданию, не требуется.
+    def count_points_using_while(self, a, b, h):
+        self.points_counted_using_while = {}
+class SecondTaskData(DataClass):
+    # for
+    def count_points_using_for(self, a, b, h):
+        self.points_counted_using_for = {}
+        
+    # while
+    def count_points_using_while(self, a, b, h):
+        left_border = a
+        right_border = b
+        step = h
+        def _count_y(x):
             y = 0
             # x + e^(-x),       if    x <= 0
             if x <= 0:
@@ -77,20 +75,27 @@ class SecondTaskData(DataClass):
             else:
                 y = 1 + ((x - 1) ** 2)
             return y
+        while left_border < right_border:
+            x = left_border
+            y = _count_y(x)
+
+            self.points_counted_using_while[x] = y
+            left_border += step
+
 
 class ThirdTaskData(DataClass):
-    def count_points_with_parameter_loop_operator(self, a, b, h):
+    def count_points_using_for(self, a, b, h):
         left_border = a
         right_border = b
         step = h
         steps_number = math.ceil((right_border - left_border) / step)
-        for i in steps_number:
+        for i in range(steps_number):
             x = left_border
             y = self._count_y(x)
 
-            self.points_by_parameter_loop_operator.points[x] = y
+            self.points_counted_using_for[x] = y
             left_border += step
-    def count_points_with_precondition_loop_operator(self, a, b, h):
+    def count_points_using_while(self, a, b, h):
         x = 0
         y = 0
         left_border = a
@@ -100,7 +105,7 @@ class ThirdTaskData(DataClass):
             x = left_border
             y = self._count_y(x)
 
-            DataClass.points_by_precondition_loop_operator.points[x] = y
+            self.points_counted_using_while[x] = y
             left_border += step
     def _count_y(self, x):
         y = 0
