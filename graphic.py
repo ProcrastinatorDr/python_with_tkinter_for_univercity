@@ -119,11 +119,13 @@ class GUIApp:
         #plt.grid(True)
 
     def make_tables(self, frame):
-        def make_table(points: dict, title):
+        def make_table(points: dict, title, position):
             table_frame = ttk.Frame(master=frame, borderwidth=1, relief=SOLID, width=500, height=60)
-            
             table_frame.pack(expand=False, fill='none')
             table_frame.pack_propagate(False)
+            
+            title_label = ttk.Label(master=table_frame, text=title)
+            title_label.pack(side="left")
             scrollbar = ttk.Scrollbar(master=table_frame, orient=HORIZONTAL)
             scrollbar.pack(side="bottom",fill="x", expand=False)
 
@@ -142,10 +144,9 @@ class GUIApp:
                 rounded_values.append(round(value, ndigits))
             tree.insert("", END, values = tuple(rounded_keys))
             tree.insert("", END, values = tuple(rounded_values))
-
             tree.pack(expand=False, fill='none', side='top')
-        make_table(self.current_counting_option.points_counted_using_for, "for")
-        make_table(self.current_counting_option.points_counted_using_while, "while")
+        make_table(self.current_counting_option.points_counted_using_for,   " for      ", 0)
+        make_table(self.current_counting_option.points_counted_using_while, " while ", 1)
         
 
     

@@ -14,9 +14,9 @@ class DataClass:
     def count_points_using_while(self):
         raise NotImplementedError("Метод должен быть определен в дочернем классе!")
     def get_x_values(self, points):
-        return self.points_counted_using_for.keys()
+        return points.keys()
     def get_y_values(self, points):
-        return self.points_counted_using_for.values()
+        return points.values()
 
 class FirstTaskData(DataClass):
     def __init__(self):
